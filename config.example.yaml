@@ -8,13 +8,14 @@ sources:  # Paths relative to /source mount
   - /source/.ssh
 
 excludes:
-  - /source/configs/kometa/overlays
-  - /source/configs/kometa/logs
-  - /source/configs/plex/Library/Application Support/Plex Media Server/Media
-  - /source/configs/plex/Library/Application Support/Plex Media Server/Metadata
-  - /source/configs/plex/Library/Application Support/Plex Media Server/Cache
-  - /source/configs/plex/Library/Application Support/Plex Media Server/Logs
-  - /source/configs/plex/Library/Application Support/Plex Media Server/Drivers
+  - source/configs/kometa/overlays
+  - source/configs/kometa/logs
+  - source/configs/recyclarr/cache
+  - source/configs/plex/Library/Application Support/Plex Media Server/Media
+  - source/configs/plex/Library/Application Support/Plex Media Server/Metadata
+  - source/configs/plex/Library/Application Support/Plex Media Server/Cache
+  - source/configs/plex/Library/Application Support/Plex Media Server/Logs
+  - source/configs/plex/Library/Application Support/Plex Media Server/Drivers
 
 schedule: "0 4 * * *"  # Cron syntax
 
