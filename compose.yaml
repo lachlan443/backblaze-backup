@@ -1,0 +1,13 @@
+services:
+  backup:
+    build: .
+    container_name: backup
+    environment:
+      - TZ=Australia/Sydney
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/lach/configs/backup:/config
+      - /home/lach/backups:/backups
+      - /home/lach:/source:ro
+    restart: unless-stopped

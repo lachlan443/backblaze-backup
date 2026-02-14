@@ -1,0 +1,41 @@
+# Backup Container Configuration
+
+sources:  # Paths relative to /source mount
+  - /source/configs
+  - /source/compose.yaml
+  - /source/restore.txt
+  - /source/.config
+  - /source/.ssh
+
+excludes:
+  - /source/configs/kometa/overlays
+  - /source/configs/kometa/logs
+  - /source/configs/plex/Library/Application Support/Plex Media Server/Media
+  - /source/configs/plex/Library/Application Support/Plex Media Server/Metadata
+  - /source/configs/plex/Library/Application Support/Plex Media Server/Cache
+  - /source/configs/plex/Library/Application Support/Plex Media Server/Logs
+  - /source/configs/plex/Library/Application Support/Plex Media Server/Drivers
+
+schedule: "0 4 * * *"  # Cron syntax
+
+retention:
+  keep_daily: 7    # Keep all backups from last N days
+  keep_weekly: 4   # Keep 1 per week for N weeks (beyond daily)
+  keep_monthly: 6  # Keep 1 per month for N months (beyond weekly)
+
+remote:
+  enabled: true
+  bucket: your-bucket-name
+  account_id: "your_b2_account_id"  # From B2 Application Keys
+  application_key: "your_b2_application_key"
+
+notifications:
+  discord:
+    enabled: false
+    webhook_url: ""
+    on_success: false  # Notify on every successful backup
+    on_failure: true   # Notify when backup fails
+
+logging:
+  level: info  # debug, info, warn, error
+  file: /config/backup.log
