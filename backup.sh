@@ -50,7 +50,7 @@ send_discord_notification() {
         return
     fi
 
-    local webhook_url=$(yq -r '.notifications.discord.webhook_url // ""' "$CONFIG_FILE")
+    local webhook_url="${DISCORD_WEBHOOK_URL:-$(yq -r '.notifications.discord.webhook_url // ""' "$CONFIG_FILE")}"
     local on_success=$(yq -r '.notifications.discord.on_success // false' "$CONFIG_FILE")
     local on_failure=$(yq -r '.notifications.discord.on_failure // true' "$CONFIG_FILE")
 

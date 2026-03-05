@@ -37,9 +37,9 @@ generate_rclone_conf() {
         return
     fi
 
-    local bucket=$(yq -r '.remote.bucket // ""' "$CONFIG_FILE")
-    local account_id=$(yq -r '.remote.account_id // ""' "$CONFIG_FILE")
-    local app_key=$(yq -r '.remote.application_key // ""' "$CONFIG_FILE")
+    local bucket="${B2_BUCKET:-$(yq -r '.remote.bucket // ""' "$CONFIG_FILE")}"
+    local account_id="${B2_ACCOUNT_ID:-$(yq -r '.remote.account_id // ""' "$CONFIG_FILE")}"
+    local app_key="${B2_APPLICATION_KEY:-$(yq -r '.remote.application_key // ""' "$CONFIG_FILE")}"
 
     if [ -z "$account_id" ] || [ -z "$app_key" ]; then
         log "WARNING: B2 credentials not configured in config.yaml"
