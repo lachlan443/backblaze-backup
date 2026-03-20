@@ -306,6 +306,7 @@ sync_to_remote() {
     fi
 
     local bucket=$(yq -r '.remote.bucket // ""' "$CONFIG_FILE")
+    local path=$(yq -r '.remote.path // ""' "$CONFIG_FILE")
 
     if [ -z "$bucket" ]; then
         log_error "Remote bucket not configured"
@@ -317,9 +318,19 @@ sync_to_remote() {
         return 1
     fi
 
-    log_info "Syncing to B2: b2:${bucket}"
+    local destination="b2:${bucket}"
+    local extra_flags=""
 
-    if rclone --config="$RCLONE_CONF" sync "$BACKUP_DIR" "b2:${bucket}" --stats 15s --stats-one-line; then
+    if [ -n "$path" ]; then
+        destination="b2:${bucket}/${path}"
+    else
+        # At bucket root — exclude subdirectories to avoid deleting other servers' folders
+        extra_flags="--exclude=*/"
+    fi
+
+    log_info "Syncing to B2: ${destination}"
+
+    if rclone --config="$RCLONE_CONF" sync "$BACKUP_DIR" "$destination" --stats 15s --stats-one-line $extra_flags; then
         log_info "Sync to B2 complete"
         return 0
     else

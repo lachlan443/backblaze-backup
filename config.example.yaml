@@ -27,6 +27,7 @@ retention:
 remote:
   enabled: true
   bucket: your-bucket-name
+  path: ""  # Optional subfolder within bucket (e.g. "sweet"). If omitted, syncs to bucket root without touching subdirectories.
   account_id: "your_b2_account_id"  # From B2 Application Keys
   application_key: "your_b2_application_key"
 
